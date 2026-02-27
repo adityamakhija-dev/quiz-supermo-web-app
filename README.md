@@ -21,7 +21,7 @@ https://quizsupermo.netlify.app/
 
 <br>
 
-<img src="quiz_supermo.png" alt="Quiz Súpermo Preview" width="850">
+<img src="quiz-supermo.jpg" alt="Quiz Súpermo Preview" width="850">
 
 </div>
 
