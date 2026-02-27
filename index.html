@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Súpermo Premium</title>
+
+  <!-- Preload Assets -->
+  <link rel="preload" as="image" href="assets/background.jpg" />
+  <link rel="preload" as="image" href="assets/dark-background.jpg" />
+  <link rel="preload" as="audio" href="music.mp3" type="audio/mp3" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- CSS + Chart.js -->
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="background-layer"></div>
+
+  <!-- Music -->
+  <audio id="bg-music" loop autoplay muted>
+    <source src="music.mp3" type="audio/mp3" />
+  </audio>
+
+  <div class="music-toggle" onclick="toggleMusic()">🎵</div>
+  <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
+
+  <div class="container">
+    <h1 class="game-title">🎓 Quiz Súpermo</h1>
+
+    <!-- Category Selection -->
+    <div class="category-grid">
+      <div class="category" onclick="startCategory('sports')">
+        <img src="assets/icons/sports.png" alt="Sports" />
+        <span>Sports</span>
+      </div>
+      <div class="category" onclick="startCategory('politics')">
+        <img src="assets/icons/politics.png" alt="Politics" />
+        <span>Politics</span>
+      </div>
+      <div class="category" onclick="startCategory('history')">
+        <img src="assets/icons/history.png" alt="History" />
+        <span>History</span>
+      </div>
+      <div class="category" onclick="startCategory('films')">
+        <img src="assets/icons/films.png" alt="Films & Music" />
+        <span>Films & Music</span>
+      </div>
+      <div class="category" onclick="startCategory('comedy')">
+        <img src="assets/icons/comedy.png" alt="Comedy" />
+        <span>Comedy</span>
+      </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="hidden">
+      <div class="quiz-header">
+        <div id="question-count"></div>
+
+        <!-- Timer with numeric countdown -->
+        <div id="timer-container">
+          <div id="timer-bar">
+            <div id="timer-progress"></div>
+          </div>
+          <span id="timer-text">30</span>
+        </div>
+      </div>
+
+      <h2 id="question-text"></h2>
+      <div id="options-box"></div>
+      <p id="feedback"></p>
+      <div class="quiz-actions">
+        <button id="skip-btn" onclick="skipQuestion()">⏭️ Skip</button>
+        <button id="next-btn" onclick="nextQuestion()">➡️ Next</button>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="hidden">
+      <h2>🎉 Quiz Completed!</h2>
+      <p id="final-score"></p>
+      <canvas id="result-chart" width="300" height="200"></canvas>
+      <div id="iq-label"></div>
+      <button onclick="viewAnswers()">📋 Review Answers</button>
+      <button onclick="restartQuiz()">🔁 Play Again</button>
+    </div>
+
+    <!-- Review Screen -->
+    <div id="review-screen" class="hidden">
+      <h2>📖 Answer Review</h2>
+      <div style="margin-bottom: 1rem;">
+        <label>
+          <input type="checkbox" id="filter-toggle" onchange="populateReviewList()" />
+          Show only incorrect answers
+        </label>
+      </div>
+      <div id="review-list"></div>
+      <button onclick="restartQuiz()">🔙 Back to Home</button>
+    </div>
+
+    <!-- Leaderboard -->
+    <div id="leaderboard-screen" class="hidden">
+      <h2>🏆 Leaderboard</h2>
+      <ol id="leaderboard-list"></ol>
+    </div>
+  </div>
+
+  <!-- Music Autoplay Fix -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const bgMusic = document.getElementById("bg-music");
+      document.body.addEventListener("click", () => {
+        if (bgMusic.paused) {
+          bgMusic.muted = false;
+          bgMusic.play().catch(err => console.log("Autoplay blocked:", err));
+        }
+      }, { once: true });
+    });
+  </script>
+
+  <script src="questions.js"></script>
+  <script src="confetti.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
